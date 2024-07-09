@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Loader } from "../Components/Navigation/Loader.tsx";
 
 interface trackProps {
   id: number;
@@ -20,12 +21,14 @@ interface trackProps {
 export const Tracks = () => {
   const [tracks, setTracks] = useState<trackProps[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await fetchTracks();
         setTracks(data);
+        setLoading(false);
       } catch (error) {
         // @ts-ignore
         setError(error.message);
@@ -51,50 +54,51 @@ export const Tracks = () => {
     <>
       <div>
         <h2>Tracks</h2>
-        {tracks.map((track) => {
-          return (
-            <div className="card" key={track.id}>
-              <h2>
-                <span className={"gray"}>{track.meeting_official_name}</span>
-              </h2>
-              <div>
-                Year:
-                <span className={"gray"}>{track.year}</span>
-              </div>
+        {<Loader></Loader> &&
+          tracks.map((track) => {
+            return (
+              <div className="card" key={track.id}>
+                <h2>
+                  <span className={"gray"}>{track.meeting_official_name}</span>
+                </h2>
+                <div>
+                  Year:
+                  <span className={"gray"}>{track.year}</span>
+                </div>
 
-              <div>
-                Meeting Name:
-                <span className={"gray"}>{track.meeting_name}</span>
-              </div>
-              <div>
-                Circuit Short Name:
-                <span className={"gray"}>{track.circuit_short_name}</span>
-              </div>
-              <div>
-                Location:
-                <span className={"gray"}>{track.location}</span>
-              </div>
-              <div>
-                Country:
-                <span className={"gray"}>{track.country_name}</span>
-              </div>
-              <div>
-                Coutry Code:
-                <span className={"gray"}>{track.country_code}</span>
-              </div>
+                <div>
+                  Meeting Name:
+                  <span className={"gray"}>{track.meeting_name}</span>
+                </div>
+                <div>
+                  Circuit Short Name:
+                  <span className={"gray"}>{track.circuit_short_name}</span>
+                </div>
+                <div>
+                  Location:
+                  <span className={"gray"}>{track.location}</span>
+                </div>
+                <div>
+                  Country:
+                  <span className={"gray"}>{track.country_name}</span>
+                </div>
+                <div>
+                  Coutry Code:
+                  <span className={"gray"}>{track.country_code}</span>
+                </div>
 
-              <div>
-                Date Start:
-                <span className={"gray"}>{track.date_start}</span>
-              </div>
+                <div>
+                  Date Start:
+                  <span className={"gray"}>{track.date_start}</span>
+                </div>
 
-              <div>
-                GMT Offset:
-                <span className={"gray"}>{track.gmt_offset}</span>
+                <div>
+                  GMT Offset:
+                  <span className={"gray"}>{track.gmt_offset}</span>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </>
   );
