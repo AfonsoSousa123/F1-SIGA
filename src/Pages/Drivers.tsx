@@ -27,12 +27,14 @@ export const Drivers = () => {
                 const data = await fetchDrivers();
                 setDrivers(data);
             } catch (error) {
+                // @ts-ignore
                 setError(error.message);
             }
         }
 
         fetchData();
     }, []);
+
     if (error) {
         return <div>Error: {error}</div>;
     }
