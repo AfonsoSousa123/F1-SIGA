@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../Components/Navigation/Loader.tsx";
-import { fullTimeFormater } from "../misc/date-formater/date -formater.ts";
+import {
+  dateFormater,
+  timeFormater,
+} from "../misc/date-formater/date -formater.ts";
 
-interface trackProps {
+interface raceProps {
   id: number;
   location: string;
   country_key: number;
@@ -19,16 +22,16 @@ interface trackProps {
   year: number;
 }
 
-export const Tracks = () => {
-  const [tracks, setTracks] = useState<trackProps[]>([]);
+export const RaceWeekend = () => {
+  const [raceWeek, setRaceWeek] = useState<raceProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await fetchTracks();
-        setTracks(data);
+        const data = await fetchLatestRace();
+        setRaceWeek(data);
       } catch (error) {
         // @ts-ignore
         setError(error.message);
@@ -44,9 +47,9 @@ export const Tracks = () => {
     return <div>Error: {error}</div>;
   }
 
-  async function fetchTracks(): Promise<trackProps[]> {
+  async function fetchLatestRace(): Promise<raceProps[]> {
     const response = await fetch(
-      "https://api.openf1.org/v1/meetings?year=2024",
+      "https://api.openf1.org/v1/meetings?meeting_key=latest",
     );
     const data = await response.json();
     return data;
@@ -56,8 +59,8 @@ export const Tracks = () => {
     <>
       {isLoading && <Loader></Loader>}
       <div>
-        <h2>Tracks</h2>
-        {tracks.map((track) => {
+        <h2>Race Weekend</h2>
+        {raceWeek.map((track) => {
           return (
             <div className="card" key={track.id}>
               <div>
@@ -91,9 +94,8 @@ export const Tracks = () => {
 
               <div>
                 Date Start:
-                <span className={"gray"}>
-                  {fullTimeFormater(track.date_start)}
-                </span>
+                <span className={"gray"}>{dateFormater(track.date_start)}</span>
+                <span className={"gray"}>{timeFormater(track.date_start)}</span>
               </div>
 
               <div>
@@ -108,4 +110,4 @@ export const Tracks = () => {
   );
 };
 
-export default Tracks;
+export default RaceWeekend;

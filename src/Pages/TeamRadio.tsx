@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../Components/Navigation/Loader.tsx";
+import { fullTimeFormater } from "../misc/date-formater/date -formater.ts";
 
 interface teamRadioProps {
   id: number;
@@ -40,7 +41,6 @@ export const TeamRadio = () => {
       "https://api.openf1.org/v1/team_radio?session_key=9465&meeting_key=1229",
     );
     const data = await response.json();
-    console.log(data);
     return data;
   }
 
@@ -63,7 +63,9 @@ export const TeamRadio = () => {
               </audio>
               <div>
                 Date:
-                <span className={"gray"}>{teamRadio.date}</span>
+                <span className={"gray"}>
+                  {fullTimeFormater(teamRadio.date)}
+                </span>
               </div>
               <div>
                 Session Key:
