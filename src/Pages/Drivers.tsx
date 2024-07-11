@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../Components/Navigation/Loader.tsx";
+import Image from "react-bootstrap/Image";
 
 interface driverProps {
   id: number;
@@ -58,34 +59,34 @@ export const Drivers = () => {
         {drivers.map((driver) => {
           return (
             <div className="card" key={driver.id}>
-              <img alt={driver.name_acronym} src={driver.headshot_url} />
+              <Image
+                alt={driver.name_acronym}
+                src={driver.headshot_url}
+                roundedCircle
+              />
               <div>
                 Number:
-                <span className={"gray"}>{driver.driver_number}</span>
+                <span className={"blue"}>{driver.driver_number}</span>
               </div>
               <div>
                 Full Name:
-                <span className={"gray"}>{driver.full_name}</span>
+                <span className={"blue"}>{driver.full_name}</span>
               </div>
               <div>
                 Broadcast Name:
-                <span className={"gray"}>{driver.broadcast_name}</span>
+                <span className={"blue"}>{driver.broadcast_name}</span>
               </div>
               <div>
                 Shortname:
-                <span className={"gray"}>{driver.name_acronym}</span>
+                <span className={"blue"}>{driver.name_acronym}</span>
               </div>
               <div color={driver.team_colour}>
                 Team:
-                <span className={"gray"}>{driver.team_name}</span>
+                <span className={"blue"}>{driver.team_name}</span>
               </div>
               <div>
                 Country:
-                <span className={"gray"}>{driver.country_code}</span>
-              </div>
-              <div>
-                Session Key:
-                <span className={"gray"}>{driver.session_key}</span>
+                <span className={"blue"}>{driver.country_code}</span>
               </div>
             </div>
           );

@@ -64,43 +64,43 @@ export const RaceWeekend = () => {
           return (
             <div className="card" key={track.id}>
               <div>
-                <h3 className={"gray"}>{track.meeting_official_name}</h3>
+                <h3 className={"blue"}>{track.meeting_official_name}</h3>
               </div>
               <div>
                 Year:
-                <span className={"gray"}>{track.year}</span>
+                <span className={"blue"}>{track.year}</span>
               </div>
 
               <div>
                 Meeting Name:
-                <span className={"gray"}>{track.meeting_name}</span>
+                <span className={"blue"}>{track.meeting_name}</span>
               </div>
               <div>
                 Circuit Short Name:
-                <span className={"gray"}>{track.circuit_short_name}</span>
+                <span className={"blue"}>{track.circuit_short_name}</span>
               </div>
               <div>
                 Location:
-                <span className={"gray"}>{track.location}</span>
+                <span className={"blue"}>{track.location}</span>
               </div>
               <div>
                 Country:
-                <span className={"gray"}>{track.country_name}</span>
+                <span className={"blue"}>{track.country_name}</span>
               </div>
               <div>
                 Coutry Code:
-                <span className={"gray"}>{track.country_code}</span>
+                <span className={"blue"}>{track.country_code}</span>
               </div>
 
               <div>
                 Date Start:
-                <span className={"gray"}>{dateFormater(track.date_start)}</span>
-                <span className={"gray"}>{timeFormater(track.date_start)}</span>
+                <span className={"blue"}>{dateFormater(track.date_start)}</span>
+                <span className={"blue"}>{timeFormater(track.date_start)}</span>
               </div>
 
               <div>
                 GMT Offset:
-                <span className={"gray"}>{track.gmt_offset}</span>
+                <span className={"blue"}>{track.gmt_offset}</span>
               </div>
             </div>
           );

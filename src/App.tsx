@@ -1,20 +1,21 @@
 import "./App.css";
 import { TabsBar } from "./Components/Navigation/TabsBar.tsx";
 import Footer from "./Components/Navigation/Footer.tsx";
-import IntroVideo from "./Components/Features/IntroVideo.tsx";
+import { Container } from "@mui/material";
+import Hero from "./Components/Features/Hero.tsx";
+import Menu from "./Components/Navigation/Menu.tsx";
 
 function App() {
   return (
     <>
       {/*Header Section*/}
-      {/*<Menu></Menu>*/}
+      <Menu></Menu>
       {/*Main Content Section*/}
-      <h1>F1 SIGA</h1>
-      <h3>Just a simple Formula One Wiki...</h3>
-
-      <IntroVideo></IntroVideo>
-      <br />
-      <TabsBar></TabsBar>
+      <Container>
+        <Hero />
+        <br />
+        <TabsBar></TabsBar>
+      </Container>
 
       <Footer></Footer>
       {/*Footer Section*/}

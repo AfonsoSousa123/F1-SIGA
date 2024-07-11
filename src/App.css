@@ -34,6 +34,7 @@
 }
 
 .card {
+  max-width: 500px;
   padding: 2em;
   border: #1a1a1a 1px solid;
   background-color: #213547;
@@ -45,7 +46,7 @@
   color: #888;
 }
 
-.gray {
+.blue {
   color: #00c0c6;
   margin-left: 10px;
   font-weight: bold;
