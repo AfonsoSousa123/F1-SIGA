@@ -53,45 +53,46 @@ export const Drivers = () => {
 
   return (
     <>
-      {isLoading && <Loader></Loader>}
-      <div>
-        <h2>Drivers</h2>
-        {drivers.map((driver) => {
-          return (
-            <div className="card" key={driver.id}>
-              <Image
-                alt={driver.name_acronym}
-                src={driver.headshot_url}
-                roundedCircle
-              />
-              <div>
-                Number:
-                <span className={"blue"}>{driver.driver_number}</span>
+      {(isLoading && <Loader></Loader>) || (
+        <div>
+          <h2>Drivers</h2>
+          {drivers.map((driver) => {
+            return (
+              <div className="card" key={driver.id}>
+                <Image
+                  alt={driver.name_acronym}
+                  src={driver.headshot_url}
+                  roundedCircle
+                />
+                <div>
+                  Number:
+                  <span className={"blue"}>{driver.driver_number}</span>
+                </div>
+                <div>
+                  Full Name:
+                  <span className={"blue"}>{driver.full_name}</span>
+                </div>
+                <div>
+                  Broadcast Name:
+                  <span className={"blue"}>{driver.broadcast_name}</span>
+                </div>
+                <div>
+                  Shortname:
+                  <span className={"blue"}>{driver.name_acronym}</span>
+                </div>
+                <div color={driver.team_colour}>
+                  Team:
+                  <span className={"blue"}>{driver.team_name}</span>
+                </div>
+                <div>
+                  Country:
+                  <span className={"blue"}>{driver.country_code}</span>
+                </div>
               </div>
-              <div>
-                Full Name:
-                <span className={"blue"}>{driver.full_name}</span>
-              </div>
-              <div>
-                Broadcast Name:
-                <span className={"blue"}>{driver.broadcast_name}</span>
-              </div>
-              <div>
-                Shortname:
-                <span className={"blue"}>{driver.name_acronym}</span>
-              </div>
-              <div color={driver.team_colour}>
-                Team:
-                <span className={"blue"}>{driver.team_name}</span>
-              </div>
-              <div>
-                Country:
-                <span className={"blue"}>{driver.country_code}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };

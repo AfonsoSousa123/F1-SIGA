@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../Components/Navigation/Loader.tsx";
 import { fullTimeFormater } from "../misc/date-formater/date -formater.ts";
+import { Badge } from "react-bootstrap";
 
 interface teamRadioProps {
   id: number;
@@ -38,7 +39,7 @@ export const TeamRadio = () => {
 
   async function fetchTeamRadio(): Promise<teamRadioProps[]> {
     const response = await fetch(
-      "https://api.openf1.org/v1/team_radio?session_key=9465&meeting_key=1229",
+      "https://api.openf1.org/v1/team_radio?session_key=latest&meeting_key=latest",
     );
     const data = await response.json();
     return data;
@@ -46,40 +47,43 @@ export const TeamRadio = () => {
 
   return (
     <>
-      {isLoading && <Loader></Loader>}
-      <div>
-        <h2>Team Radio</h2>
-        {teamRadios.map((teamRadio) => {
-          return (
-            <div className="card" key={teamRadio.id}>
-              <div>
-                Driver Number:
-                <span className={"gray"}>{teamRadio.driver_number}</span>
-              </div>
-              <div>Audio:</div>
-              <br></br>
-              <audio controls>
-                <source src={teamRadio.recording_url} type="audio/mp3" />
-              </audio>
-              <div>
-                Date:
-                <span className={"gray"}>
-                  {fullTimeFormater(teamRadio.date)}
-                </span>
-              </div>
-              <div>
-                Session Key:
-                <span className={"gray"}>{teamRadio.session_key}</span>
-              </div>
+      {(isLoading && <Loader></Loader>) || (
+        <div>
+          <h2>Team Radio</h2>
+          {teamRadios.map((teamRadio) => {
+            return (
+              <div className="card" key={teamRadio.id}>
+                <div>
+                  Driver Number:
+                  <Badge bg="light" text="dark">
+                    {teamRadio.driver_number}
+                  </Badge>
+                </div>
+                <div>Audio:</div>
+                <br></br>
+                <audio controls>
+                  <source src={teamRadio.recording_url} type="audio/mp3" />
+                </audio>
+                <div>
+                  Date:
+                  <span className={"gray"}>
+                    {fullTimeFormater(teamRadio.date)}
+                  </span>
+                </div>
+                <div>
+                  Session Key:
+                  <span className={"gray"}>{teamRadio.session_key}</span>
+                </div>
 
-              <div>
-                Meeting Key:
-                <span className={"gray"}>{teamRadio.meeting_key}</span>
+                <div>
+                  Meeting Key:
+                  <span className={"gray"}>{teamRadio.meeting_key}</span>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };
