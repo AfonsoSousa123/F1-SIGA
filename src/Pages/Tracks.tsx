@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../Components/Navigation/Loader.tsx";
 import { fullTimeFormater } from "../misc/date-formater/date -formater.ts";
+import Box from "@mui/material/Box";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface trackProps {
   id: number;
@@ -23,22 +31,46 @@ export const Tracks = () => {
   const [tracks, setTracks] = useState<trackProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [sortType, setSortType] = useState("descending");
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await fetchTracks();
-        setTracks(data);
-      } catch (error) {
-        // @ts-ignore
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
+    fetchData();
+  }, [sortType]);
+
+  async function fetchData() {
+    try {
+      const data = await fetchTracks();
+      sortData(data);
+    } catch (error) {
+      // @ts-ignore
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function sortData(data: trackProps[]) {
+    let sortedData;
+    if (sortType === "descending") {
+      // Sorts the data by date in descending order
+      sortedData = [...data].sort((a, b) => {
+        const dateA = new Date(a.date_start);
+        const dateB = new Date(b.date_start);
+        return dateB.getTime() - dateA.getTime();
+      });
+    } else if (sortType === "ascending") {
+      // Sorts the data by date in ascending order
+      sortedData = [...data].sort((a, b) => {
+        const dateA = new Date(a.date_start);
+        const dateB = new Date(b.date_start);
+        return dateA.getTime() - dateB.getTime();
+      });
+    } else {
+      return data;
     }
 
-    fetchData();
-  }, []);
+    setTracks(sortedData);
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -52,11 +84,39 @@ export const Tracks = () => {
     return data;
   }
 
+  // handles the change of the select component
+  const handleChange = (e: SelectChangeEvent) => {
+    setSortType(e.target.value as string);
+  };
+
   return (
     <>
       {(isLoading && <Loader></Loader>) || (
         <div>
           <h2>Tracks</h2>
+
+          <div className="wrapper">
+            <Box sx={{ minWidth: 80 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  className={"select-sort"}
+                  id="demo-simple-select"
+                  value={sortType}
+                  label="Sort by"
+                  color={"primary"}
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"descending"}>Descending</MenuItem>
+                  <MenuItem value={"ascending"}> Ascending</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+
+          <br />
+
           {tracks.map((track) => {
             return (
               <div className="card" key={track.id}>
