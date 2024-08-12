@@ -7,6 +7,8 @@ import Tracks from "../../Pages/Tracks.tsx";
 import { TeamRadio } from "../../Pages/TeamRadio.tsx";
 import RaceWeekend from "../../Pages/RaceWeekend.tsx";
 import RaceControl from "../../Pages/RaceControl.tsx";
+import Weather from "../../Pages/Weather.tsx";
+import { Positions } from "../../Pages/Positions.tsx";
 
 export const TabsBar = () => {
   const [value, setValue] = useState(0);
@@ -32,6 +34,8 @@ export const TabsBar = () => {
           <Tab label="Tracks" {...Props(2)} />
           <Tab label="Team Radios" {...Props(3)} />
           <Tab label="Race Control" {...Props(4)} />
+          <Tab label="Weather" {...Props(5)} />
+          <Tab label="Positions" {...Props(6)} />
         </Tabs>
       </Box>
 
@@ -49,6 +53,12 @@ export const TabsBar = () => {
       </TabContent>
       <TabContent index={4} value={value}>
         <RaceControl></RaceControl>
+      </TabContent>
+      <TabContent index={5} value={value}>
+        <Weather></Weather>
+      </TabContent>
+      <TabContent index={6} value={value}>
+        <Positions></Positions>
       </TabContent>
     </>
   );

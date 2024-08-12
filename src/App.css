@@ -11,6 +11,13 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
+.centered {
+  /* margin: 0 auto; */
+  margin-left: auto; !important;
+  margin-right: auto; !important;
+}
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -40,6 +47,8 @@
   background-color: #213547;
   border-radius: 20px;
   margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .read-the-docs {
@@ -55,4 +64,12 @@
 .select-sort {
   color: #00c0c6;
   background-color: white;
+}
+
+.positions-table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: 2px solid #00c0c6;
+    border-collapse: collapse;
 }

@@ -10,25 +10,22 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-interface trackProps {
+interface weatherProps {
   id: number;
-  location: string;
-  country_key: number;
-  country_code: string;
-  country_name: string;
-  circuit_key: number;
-  circuit_short_name: string;
-  date_start: string;
-  gmt_offset: string;
-  meeting_name: string;
-  meeting_official_name: string;
+  date: string;
+  air_temperature: number;
+  humidity: number;
+  pressure: number;
+  rainfall: number;
+  track_temperature: number;
+  wind_direction: number;
+  wind_speed: number;
   meeting_key: number;
-  meeting_code: number;
-  year: number;
+  session_key: number;
 }
 
-export const Tracks = () => {
-  const [tracks, setTracks] = useState<trackProps[]>([]);
+export const Weather = () => {
+  const [weather, setWeather] = useState<weatherProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [sortType, setSortType] = useState("descending");
@@ -39,7 +36,7 @@ export const Tracks = () => {
 
   async function fetchData() {
     try {
-      const data = await fetchTracks();
+      const data = await fetchWeather();
       sortData(data);
     } catch (error) {
       // @ts-ignore
@@ -49,39 +46,38 @@ export const Tracks = () => {
     }
   }
 
-  function sortData(data: trackProps[]) {
+  function sortData(data: weatherProps[]) {
     let sortedData;
     if (sortType === "descending") {
       // Sorts the data by date in descending order
       sortedData = [...data].sort((a, b) => {
-        const dateA = new Date(a.date_start);
-        const dateB = new Date(b.date_start);
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
         return dateB.getTime() - dateA.getTime();
       });
     } else if (sortType === "ascending") {
       // Sorts the data by date in ascending order
       sortedData = [...data].sort((a, b) => {
-        const dateA = new Date(a.date_start);
-        const dateB = new Date(b.date_start);
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
         return dateA.getTime() - dateB.getTime();
       });
     } else {
       return data;
     }
 
-    setTracks(sortedData);
+    setWeather(sortedData);
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  async function fetchTracks(): Promise<trackProps[]> {
+  async function fetchWeather(): Promise<weatherProps[]> {
     const response = await fetch(
-      "https://api.openf1.org/v1/meetings?year=2024",
+      "https://api.openf1.org/v1/weather?session_key=latest&meeting_key=latest",
     );
-    const data = await response.json();
-    return data;
+    return await response.json();
   }
 
   // handles the change of the select component
@@ -93,7 +89,7 @@ export const Tracks = () => {
     <>
       {(isLoading && <Loader></Loader>) || (
         <div>
-          <h2>Tracks</h2>
+          <h2>Weather Forecast</h2>
 
           <div className="wrapper">
             <Box sx={{ minWidth: 80 }}>
@@ -117,48 +113,63 @@ export const Tracks = () => {
 
           <br />
 
-          {tracks.map((track) => {
+          {weather.map((weatherInfo) => {
             return (
-              <div className="card" key={track.id}>
-                <h3 className={"blue"}>{track.meeting_official_name}</h3>
-
+              <div className="card" key={weatherInfo.id}>
                 <div>
-                  Year:
-                  <span className={"blue"}>{track.year}</span>
-                </div>
-
-                <div>
-                  Meeting Name:
-                  <span className={"blue"}>{track.meeting_name}</span>
-                </div>
-                <div>
-                  Circuit Short Name:
-                  <span className={"blue"}>{track.circuit_short_name}</span>
-                </div>
-                <div>
-                  Location:
-                  <span className={"blue"}>{track.location}</span>
-                </div>
-                <div>
-                  Country:
-                  <span className={"blue"}>{track.country_name}</span>
-                </div>
-                <div>
-                  Coutry Code:
-                  <span className={"blue"}>{track.country_code}</span>
-                </div>
-
-                <div>
-                  Date Start:
+                  Air Temperature:
                   <span className={"blue"}>
-                    {fullTimeFormater(track.date_start)}
+                    {weatherInfo.air_temperature} ºC
+                  </span>
+                </div>
+                <div>
+                  Date:
+                  <span className={"blue"}>
+                    {fullTimeFormater(weatherInfo.date)}
                   </span>
                 </div>
 
                 <div>
-                  GMT Offset:
-                  <span className={"blue"}>{track.gmt_offset}</span>
+                  Humidity:
+                  <span className={"blue"}>{weatherInfo.humidity} %</span>
                 </div>
+
+                <div>
+                  Pressure:
+                  <span className={"blue"}>{weatherInfo.pressure} (mbar)</span>
+                </div>
+
+                <div>
+                  Rainfall:
+                  <span className={"blue"}>
+                    {weatherInfo.rainfall == 1 ? "Yes" : "No"}
+                  </span>
+                </div>
+                <div>
+                  Track Temperature:
+                  <span className={"blue"}>
+                    {weatherInfo.track_temperature} ºC
+                  </span>
+                </div>
+
+                <div>
+                  Wind Direction:
+                  <span className={"blue"}>{weatherInfo.wind_direction} º</span>
+                </div>
+                <div>
+                  Wind Speed:
+                  <span className={"blue"}>{weatherInfo.wind_speed} (m/s)</span>
+                </div>
+
+                {/*<div>*/}
+                {/*  Session Key:*/}
+                {/*  <span className={"blue"}>{weatherInfo.session_key}</span>*/}
+                {/*</div>*/}
+
+                {/*<div>*/}
+                {/*  Meeting Key:*/}
+                {/*  <span className={"blue"}>{weatherInfo.meeting_key}</span>*/}
+                {/*</div>*/}
               </div>
             );
           })}
@@ -168,4 +179,4 @@ export const Tracks = () => {
   );
 };
 
-export default Tracks;
+export default Weather;

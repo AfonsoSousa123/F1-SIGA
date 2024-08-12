@@ -144,8 +144,8 @@ export const RaceControl = () => {
                   color={"primary"}
                   onChange={handleChange}
                 >
-                  <MenuItem value={"descending"}>Descending</MenuItem>
-                  <MenuItem value={"ascending"}> Ascending</MenuItem>
+                  <MenuItem value={"descending"}>Latest</MenuItem>
+                  <MenuItem value={"ascending"}>Oldest</MenuItem>
                 </Select>
               </FormControl>
             </Box>
