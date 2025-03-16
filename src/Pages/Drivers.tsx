@@ -45,7 +45,7 @@ export const Drivers = () => {
 
   async function fetchDrivers(): Promise<driverProps[]> {
     const response = await fetch(
-      "https://api.openf1.org/v1/drivers?meeting_key=1229&session_key=9465",
+      "https://api.openf1.org/v1/drivers?meeting_key=latest&session_key=latest",
     );
     const data = await response.json();
     return data;

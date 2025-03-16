@@ -78,7 +78,7 @@ export const Tracks = () => {
 
   async function fetchTracks(): Promise<trackProps[]> {
     const response = await fetch(
-      "https://api.openf1.org/v1/meetings?year=2024",
+      "https://api.openf1.org/v1/meetings?year=2025",
     );
     const data = await response.json();
     return data;
